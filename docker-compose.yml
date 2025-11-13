@@ -1,0 +1,10 @@
+version: "3.9"
+services:
+  app:
+    build: .
+    container_name: blog_rails_app
+    command: bash
+    volumes:
+      - .:/app
+    ports:
+      - "3000:3000"
