@@ -1,0 +1,20 @@
+<h1>Posts</h1>
+
+<%= link_to 'New Post', new_post_path, class: "btn" %>
+
+<% if @posts.any? %>
+  <ul>
+    <% @posts.each do |post| %>
+      <li>
+        <%= link_to post.title.presence || "(no title)", post %>
+        <small>— <%= l(post.created_at, format: :short) %></small>
+        <span>
+          <%= link_to 'Edit', edit_post_path(post) %> |
+          <%= link_to 'Delete', post, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </span>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No posts yet.</p>
+<% end %>
