@@ -1,0 +1,100 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1 class="fw-bold fs-3">Últimos Posts</h1>
+
+  <%= link_to "Novo Post", new_post_path, class: "btn btn-primary px-4" %>
+</div>
+
+<% if @posts.any? %>
+
+<div class="row">
+
+  <!-- FEED PRINCIPAL (ESQUERDA) -->
+  <div class="col-lg-8">
+
+    <% @posts.each do |post| %>
+      <div class="card mb-4 shadow-sm border-0">
+
+        <!-- IMAGEM DO POST -->
+        <img
+          src="https://picsum.photos/900/450?random=<%= post.id %>"
+          class="card-img-top"
+          alt="Imagem do post"
+        >
+
+        <div class="card-body">
+
+          <!-- CATEGORIA FAKE -->
+          <span class="badge bg-danger mb-2">NOTÍCIA</span>
+
+          <!-- TÍTULO -->
+          <h2 class="card-title fs-4">
+            <%= link_to (post.title.presence || "(Sem título)"), post, class: "text-decoration-none text-dark" %>
+          </h2>
+
+          <!-- DATA -->
+          <p class="text-muted small mb-3">
+            <%= l(post.created_at, format: :long) %>
+          </p>
+
+          <!-- AÇÕES -->
+          <div class="d-flex gap-3">
+            <%= link_to "Editar", edit_post_path(post), class: "text-primary fw-semibold text-decoration-none" %>
+            <%= link_to "Excluir", post, method: :delete, data: { confirm: "Tem certeza?" }, class: "text-danger fw-semibold text-decoration-none" %>
+          </div>
+
+        </div>
+      </div>
+    <% end %>
+
+  </div>
+
+  <!-- SIDEBAR (DIREITA) -->
+  <div class="col-lg-4">
+
+    <h4 class="fw-bold mb-3">Mais Recentes</h4>
+
+    <% @posts.first(5).each do |post| %>
+      <div class="card mb-3 shadow-sm border-0">
+
+        <div class="row g-0">
+
+          <div class="col-4">
+            <img
+              src="https://picsum.photos/200/200?random=<%= post.id + 100 %>"
+              class="img-fluid rounded-start"
+              alt="thumb"
+            >
+          </div>
+
+          <div class="col-8">
+            <div class="card-body p-2">
+
+              <span class="badge bg-primary mb-1 small">POST</span>
+
+              <h6 class="mb-1">
+                <%= link_to (post.title.presence || "(Sem título)"),
+                            post,
+                            class: "text-decoration-none text-dark" %>
+              </h6>
+
+              <p class="text-muted small mb-0">
+                <%= l(post.created_at, format: :short) %>
+              </p>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    <% end %>
+
+  </div>
+
+</div>
+
+<% else %>
+
+  <p class="text-muted">Nenhum post disponível.</p>
+
+<% end %>
